@@ -25,4 +25,4 @@ app.add_middleware(
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
-    return HTMLtemplates.TemplateResponse(request=request, name='index.html')
+    return HTMLtemplates.TemplateResponse(request=request, name='index.html') 
