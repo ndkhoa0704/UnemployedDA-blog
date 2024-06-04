@@ -66,8 +66,8 @@ COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 RUN poetry install
 
 WORKDIR /app
+COPY . /app
 
-COPY ./src/backend /app
 
 EXPOSE 8001
-ENTRYPOINT ["fastapi", "run", "main.py", "--port", "8001"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
