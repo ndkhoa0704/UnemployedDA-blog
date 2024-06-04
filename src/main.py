@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-# from fastapi.staticfiles import StaticFiles
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from .dependency import HTMLtemplates
@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 
-# app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 
