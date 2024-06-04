@@ -67,7 +67,7 @@ RUN poetry install
 
 WORKDIR /app
 
-COPY ./src /app
+COPY ./src/backend /app
 
 EXPOSE 8001
 ENTRYPOINT ["fastapi", "run", "main.py", "--port", "8001"]
