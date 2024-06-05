@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from .dependency import HTMLtemplates
+from .article.router import router as article_router
 
 
 app = FastAPI(
@@ -17,6 +18,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+app.include_router(article_router)
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

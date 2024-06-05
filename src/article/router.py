@@ -1,6 +1,8 @@
 from . import schemas
 from fastapi import APIRouter, Depends, File
 from typing import Annotated
+import io
+import mammoth
 
 
 router = APIRouter(prefix='/article')
@@ -11,6 +13,7 @@ def get_article(id: str) -> schemas.Articles:
     pass
 
 
-@router.post('')
+@router.post('/file')
 def post_article(file: Annotated[bytes, File()]):
-    file
+    result = mammoth.convert_to_html(io.BytesIO(file))
+    html = result.value
