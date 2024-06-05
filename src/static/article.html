@@ -1,60 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', path='/images/icon.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', path='/images/icon.png') }}">
   <title>Article Details - My Blog</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      margin: 0;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-
-    .post {
-      background-color: #fff;
-      border-radius: 5px;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .post h2 {
-      margin-top: 0;
-    }
-
-    .post p {
-      margin-bottom: 0;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
 </head>
+
 <body>
 
   <header>
@@ -64,9 +22,14 @@
   <div class="container">
     <div class="post">
       <h2>Post Title</h2>
-      <p>This is the full article content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <p>More content goes here...</p>
-      <p>And more...</p>
+      <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
+      <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+
+      <!-- Load the element definition -->
+      <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+
+      <!-- Simply set the `src` attribute to your MD file and win -->
+      <zero-md src="README.md"></zero-md>
       <a href="index.html">Back to Home</a>
     </div>
   </div>
@@ -76,4 +39,5 @@
   </footer>
 
 </body>
+
 </html>
