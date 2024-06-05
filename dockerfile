@@ -68,6 +68,7 @@ RUN poetry install
 WORKDIR /app
 COPY . /app
 
+RUN chmod +x ./docker-entrypoint.sh
 
 EXPOSE 8001
 ENTRYPOINT ["./docker-entrypoint.sh"]
