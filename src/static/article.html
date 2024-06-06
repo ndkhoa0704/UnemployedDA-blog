@@ -10,14 +10,17 @@
   <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', path='/images/icon.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', path='/images/icon.png') }}">
-  <title>Article Details - My Blog</title>
+  <title>Article Details - UnemployedDA</title>
 </head>
 
 <body>
 
-  <header>
-    <h1>My Blog</h1>
-  </header>
+	<header>
+		<div class="header-container">
+			<img class="icon" src="{{ url_for('static', path='/images/icon.png') }}"" alt="Icon">
+			<h1>UNEMPLOYED DA</h1>
+		</div>
+	</header>
 
   <div class="container">
     <div class="post">
@@ -30,12 +33,12 @@
 
       <!-- Simply set the `src` attribute to your MD file and win -->
       <zero-md src="README.md"></zero-md>
-      <a href="index.html">Back to Home</a>
+      <a href="{{ url_for('static', path='/index.html')}}">Back to Home</a>
     </div>
   </div>
 
   <footer>
-    &copy; 2024 My Blog
+    &copy; 2024 UnemployedDA
   </footer>
 
 </body>
