@@ -22,21 +22,18 @@
 	</header>
 
 	<div class="container">
+		{% for article in articles %}
 		<div class="post">
-			<h2>Post Title 1</h2>
-			<p>This is a brief description of the first post. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			</p>
-			<a href="post1.html">Read more</a>
+			<h2>{{ article.title }}</h2>
+			<div class="article-metadata">
+				<span>Created at: {{ article.created_at }}</span>
+				<span>•</span>
+				<span>Last updated: {{ article.x }}</span>
+				<span>•</span>
+				<span>{{ article.author }}</span>
+			</div>
 		</div>
-
-		<div class="post">
-			<h2>Post Title 2</h2>
-			<p>This is a brief description of the second post. Sed do eiusmod tempor incididunt ut labore et dolore
-				magna
-				aliqua.</p>
-			<a href="post2.html">Read more</a>
-		</div>
-
+		{% endfor %}
 		<!-- Add more posts as needed -->
 
 	</div>

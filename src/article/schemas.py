@@ -1,23 +1,30 @@
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, model_validator, ConfigDict
 import datetime as dt
 
 
-class Articles(BaseModel):
+class Article(BaseModel):
     title: str
     contentHTML: str
     author: str
 
 
-class ArticlesCreate(Articles):
-    created_at: dt.datetime = dt.datetime.now()
-    updated_at: dt.datetime = dt.datetime.now()
-    @model_validator(mode='after')
-    def validator(self, values):
-        values['updated_at'] = dt.datetime.now()
-        return values
+class ArticleCreate(Article):
+    pass
 
 
-
-class ArticlesReturn(Articles):
+class ArticleReturn(Article):
+    id: int
     created_at: dt.datetime
     updated_at: dt.datetime
+    
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ArticleReturnHomePage(BaseModel):
+    id: int
+    title: str
+    author: str
+    created_at: dt.datetime
+    updated_at: dt.datetime
+
+    model_config = ConfigDict(from_attributes=True)

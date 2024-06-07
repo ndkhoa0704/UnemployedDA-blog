@@ -5,6 +5,13 @@ body {
     background-color: #f4f4f4;
 }
 
+.img-resize  {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    height: auto;
+}
+
 header {
     background-color: #256FB6;
     color: #fff;
