@@ -21,13 +21,11 @@ app.add_middleware(
 )
 
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount('/article', article_router, 'article')
+
 # routers
 app.include_router(article_router)
-
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
 
 @app.get('/', response_class=HTMLResponse)
 async def index(

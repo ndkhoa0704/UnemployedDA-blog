@@ -15,26 +15,30 @@
 
 <body>
 
-	<header>
-		<div class="header-container" href="{{ url_for('index')}}">
-			<img class="icon" src="{{ url_for('static', path='/images/icon.png') }}" alt="Icon">
-			<h1>UNEMPLOYED DA</h1>
-		</div>
-	</header>
+  <header>
+    <div class="header-container">
+      <img class="icon" src="{{ url_for('static', path='/images/icon.png') }}" alt="Icon">
+      <h1>UNEMPLOYED DA</h1>
+    </div>
+  </header>
 
   <div class="container">
     <div class="post">
-      <h2>{{ article_title }}</h2>
+      <h2 id="article-title">{{ article_title }}</h2>
       <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
       <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
 
       <!-- Load the element definition -->
       <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
-      
-      {{ contentHTML|safe  }}
+
+      {{ contentHTML|safe }}
 
       <!-- Simply set the `src` attribute to your MD file and win -->
+      <hr class="solid">
+      <div class="pagination"><a href="{{ url_for('index') }}">Return Home</a></span></div>
+
     </div>
+
   </div>
 
   <footer>

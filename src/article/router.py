@@ -2,10 +2,7 @@ from . import schemas, crud
 from ..dependency import get_db, HTMLtemplates
 from fastapi.responses import HTMLResponse
 from fastapi import APIRouter, Depends, status, UploadFile, Request
-from typing import Annotated
-import io
 import mammoth
-import datetime as dt
 
 
 router = APIRouter(prefix='/article')
@@ -23,8 +20,8 @@ def upload_article(file: UploadFile, db = Depends(get_db)):
     crud.createArticle(articleObj, db)
 
 
-@router.get('',response_class=HTMLResponse)
-def get_article_by_id(request: Request, id: int, db = Depends(get_db)):    
+@router.get('/{id}',response_class=HTMLResponse)
+async def get_article_by_id(request: Request, id: int, db = Depends(get_db)):    
     article_db = crud.getArticleById(id, db)
 
     return HTMLtemplates.TemplateResponse(
@@ -32,6 +29,6 @@ def get_article_by_id(request: Request, id: int, db = Depends(get_db)):
         name='article.html',
         context={
             'article_title': article_db.title,
-            'contentHTML': article_db.contentHTML.replace('<img', '<img class="img-resize"')
+            'contentHTML': article_db.contentHTML.replace('<img', '<img class="resize"')
         }
-    ) 
+    )

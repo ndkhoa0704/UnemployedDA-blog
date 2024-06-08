@@ -24,11 +24,11 @@
 	<div class="container">
 		{% for article in articles %}
 		<div class="post">
-			<h2>{{ article.title }}</h2>
+			<h2><a href="{{ url_for('get_article_by_id', id=article.id|string) }}">{{ article.title }}</a></h2>
 			<div class="article-metadata">
 				<span>Created at: {{ article.created_at }}</span>
 				<span>•</span>
-				<span>Last updated: {{ article.x }}</span>
+				<span>Last updated: {{ article.updated_at }}</span>
 				<span>•</span>
 				<span>{{ article.author }}</span>
 			</div>
