@@ -37,6 +37,9 @@ services:
     networks:
       - unemployedda
 
+    volumes:
+    - .:/app
+
 
 networks:
   unemployedda:
