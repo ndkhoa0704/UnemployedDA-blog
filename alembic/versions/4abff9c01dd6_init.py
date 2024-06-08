@@ -25,7 +25,7 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime),
         sa.Column('updated_at', sa.DateTime),
         sa.Column('title', sa.VARCHAR(200)),
-        sa.Column('contentHTML', sa.VARCHAR(5000)),
+        sa.Column('contentHTML', sa.TEXT),
         sa.Column('author', sa.VARCHAR(100))
     )
 
