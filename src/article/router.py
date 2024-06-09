@@ -3,13 +3,21 @@ from ..dependency import get_db, HTMLtemplates
 from fastapi.responses import HTMLResponse
 from fastapi import APIRouter, Depends, status, UploadFile, Request
 import mammoth
+from typing import Annotated
+from ..security.security import get_current_active_user
+from ..security.schemas import User
+from sqlalchemy.orm import Session
 
 
 router = APIRouter(prefix='/article')
 
 
 @router.post('', status_code=status.HTTP_201_CREATED)
-def upload_article(file: UploadFile, db = Depends(get_db)):
+def upload_article(
+    file: UploadFile, 
+    db: Annotated[Session, Depends(get_db)],
+    # current_user: Annotated[User, Depends(get_current_active_user)]
+):
     title, remainPart = file.filename.split('-')
     author, _ = remainPart.split('.')
     
@@ -21,7 +29,7 @@ def upload_article(file: UploadFile, db = Depends(get_db)):
 
 
 @router.get('/{id}',response_class=HTMLResponse)
-async def get_article_by_id(request: Request, id: int, db = Depends(get_db)):    
+async def get_article_by_id(request: Request, id: int, db: Annotated[Session, Depends(get_db)]):    
     article_db = crud.getArticleById(id, db)
 
     return HTMLtemplates.TemplateResponse(

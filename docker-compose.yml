@@ -38,7 +38,9 @@ services:
       - unemployedda
 
     volumes:
-    - .:/app
+      - type: bind
+        source: .
+        target: /app
 
 
 networks:

@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from .dependency import HTMLtemplates, get_db
 from .article.router import router as article_router
+from .security.security import router as security_router
 from .article import crud as article_crud, schemas as article_schemas
 
 
@@ -22,10 +23,10 @@ app.add_middleware(
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-# app.mount('/article', article_router, 'article')
 
 # routers
 app.include_router(article_router)
+app.include_router(security_router)
 
 @app.get('/', response_class=HTMLResponse)
 async def index(
