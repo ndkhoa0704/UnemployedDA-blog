@@ -9,6 +9,7 @@ echo "$REPO_PATH"
 
 if ! git pull | grep -q 'Already up to date.'
 then
-    docker exec unemployedda-blog-server /bin/sh -c "alembic upgrade head"
-    docker restart unemployedda-blog-server
+    docker compose down
+    docker rmi unemployedda-blog
+    docker compose up -d
 fi
