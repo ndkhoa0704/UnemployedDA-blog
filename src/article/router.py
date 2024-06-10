@@ -1,7 +1,7 @@
 from . import schemas, crud
 from ..dependency import get_db, HTMLtemplates
 from fastapi.responses import HTMLResponse
-from fastapi import APIRouter, Depends, status, UploadFile, Request
+from fastapi import APIRouter, Depends, status, UploadFile, Request, HTTPException
 import mammoth
 from typing import Annotated
 from ..security.security import get_current_active_user
@@ -18,12 +18,18 @@ def upload_article(
     db: Annotated[Session, Depends(get_db)],
     # current_user: Annotated[User, Depends(get_current_active_user)]
 ):
-    title, remainPart = file.filename.split('-')
-    author, _ = remainPart.split('.')
-    
-    resultHTML = mammoth.convert_to_html(file.file)
-    html = resultHTML.value
-    articleObj = schemas.Article(title=title, contentHTML=html, author=author)
+    try:
+        title, remainPart = file.filename.split('-')
+        author, _ = remainPart.split('.')
+        
+        resultHTML = mammoth.convert_to_html(file.file)
+        html = resultHTML.value
+        articleObj = schemas.Article(title=title, contentHTML=html, author=author)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail='Cannot upload article'
+        )
 
     crud.createArticle(articleObj, db)
 
