@@ -16,17 +16,19 @@
 <body>
 	<div id="modal-upload-file" class="modal">
 		<div class="modal-content">
-			<span class="close-btn" id="closeBtn">&times;</span>
+			<!-- <span class="close-btn" id="closeBtn">&times;</span> -->
 			<form action='#' method="POST" id="uploadForm" enctype="multipart/form-data">
 				<label for="file1">Docx file:</label>
 				<input type="file" id="docx-file" name="file"><br><br>
-				<input type="submit" value="Upload">
+				<!-- <input type="submit" value="Upload"> -->
+				<button type="submit">Upload</button>
+
 			</form>
 		</div>
 	</div>
 	<div id="modal-login" class="modal">
 		<div class="login-container" id="loginContainer">
-			<span class="close-btn" id="closeBtn">&times;</span>
+			<!-- <span class="close-btn" id="closeBtn">&times;</span> -->
 			<h2>Login</h2>
 			<form id="loginForm">
 				<div class="input-group">
@@ -80,6 +82,6 @@
 	</footer>
 
 </body>
-<script src="{{ url_for('static', path='/js/form.js') }}"></script>
+<script src="{{ url_for('static', path='/js/script.js') }}"></script>
 
 </html>

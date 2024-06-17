@@ -19,15 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    closeBtn.addEventListener('click', function () {
-        if (event.target == modalUpload) {
-            modalUpload.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Allow background scrolling
-        } else if (event.target == modalLogin) {
-            modalLogin.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Allow background scrolling
-        }
-    });
+    // closeBtn.addEventListener('click', function (event) {
+    //     if (event.target == modalUpload) {
+    //         modalUpload.style.display = 'none';
+    //         document.body.style.overflow = 'auto'; // Allow background scrolling
+    //     } else if (event.target == modalLogin) {
+    //         modalLogin.style.display = 'none';
+    //         document.body.style.overflow = 'auto'; // Allow background scrolling
+    //     }
+    // });
 
     window.addEventListener('click', function (event) {
         if (event.target == modalUpload) {
