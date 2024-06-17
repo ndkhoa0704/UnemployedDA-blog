@@ -13,7 +13,6 @@ def url_for_query(request: Request, name: str, **params: str) -> str:
     return urllib.parse.urlunparse(parsed)
 
 
-HTMLtemplates.env.globals['url_for_query'] = url_for_query
 
 def get_db():
     db = SessionLocal()

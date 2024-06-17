@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div id="modal" class="modal">
+	<div id="modal-upload-file" class="modal">
 		<div class="modal-content">
 			<span class="close-btn" id="closeBtn">&times;</span>
 			<form action='#' method="POST" id="uploadForm" enctype="multipart/form-data">
@@ -24,13 +24,36 @@
 			</form>
 		</div>
 	</div>
+	<div id="modal-login" class="modal">
+		<div class="login-container" id="loginContainer">
+			<span class="close-btn" id="closeBtn">&times;</span>
+			<h2>Login</h2>
+			<form id="loginForm">
+				<div class="input-group">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" required>
+				</div>
+				<div class="input-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required>
+				</div>
+				<button type="submit">Login</button>
+			</form>
+			<p id="errorMessage"></p>
+		</div>
+	</div>
+
 	<header>
 		<div class="header-container">
 			<div class="icon-block">
 				<img class="icon" src="{{ url_for('static', path='/images/icon.png') }}"" alt=" Icon">
 				<h1>UNEMPLOYED DA</h1>
 			</div>
-			<button id="uploadBtn" class="button-17" role="button">Upload Article</button>
+			<div class="btn-block">
+				<button id="uploadBtn" class="button-17" role="button">Upload Article</button>
+				<button id="loginBtn" class="button-17" role="button">Login</button>
+			</div>
+
 		</div>
 
 	</header>

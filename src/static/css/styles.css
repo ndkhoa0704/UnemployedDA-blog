@@ -47,6 +47,11 @@ header {
     align-items: center;
 }
 
+.btn-block {
+    display: flex;
+    align-items: center;
+}
+
 .icon {
     margin-right: 10px;
     /* Khoảng cách giữa icon và tiêu đề */
@@ -224,4 +229,63 @@ a {
 
 #uploadBtnArticle {
     visibility: hidden;
+}
+
+
+button#showLoginFormButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#errorMessage {
+    color: red;
+    margin-top: 10px;
 }
