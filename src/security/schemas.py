@@ -14,12 +14,18 @@ class TokenData(BaseModel):
 class User(BaseModel):
     username: str
     email: str | None = None
-    full_name: str | None = None
+    fullname: str | None = None
     disabled: bool | None = None
-
     model_config = ConfigDict(from_attributes=True)
-
 
 
 class UserInDB(User):
     hashed_password: str
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    email: str | None = None
+    fullname: str | None = None

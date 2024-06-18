@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const uploadBtn = document.getElementById('uploadBtn');
     const modalUpload = document.getElementById('modal-upload-file');
     const modalLogin = document.getElementById('modal-login');
-    const closeBtn = document.getElementById('closeBtn');
+    // const closeBtn = document.getElementById('closeBtn');
     const uploadForm = document.getElementById('uploadForm');
     const loginBtn = document.getElementById('loginBtn');
     const loginForm = document.getElementById('loginForm');
@@ -50,9 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                modal.style.display = 'none';
+                modalUpload.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Allow background scrolling
-                window.location.reload()
+                // window.location.reload()
+                console.log(data)
             })
             .catch(error => {
                 alert('An error occurred while uploading the files.');
@@ -62,21 +63,30 @@ document.addEventListener('DOMContentLoaded', function () {
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent form from submitting the traditional way
 
-        // Get the values from the form
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+        // // Get the values from the form
+        // const username = document.getElementById('username').value;
+        // const password = document.getElementById('password').value;
 
-        // For demonstration purposes, let's consider a dummy username and password
-        const dummyUsername = 'user';
-        const dummyPassword = 'password';
+        let formData = new FormData(loginForm);
+        formData.append('scopes', 'article:data')
+        console.log(formData);
 
-        // Check if the entered username and password match the dummy ones
-        if (username === dummyUsername && password === dummyPassword) {
-            alert('Login successful!');
-            // Here you can redirect the user to another page or perform other actions
-        } else {
-            document.getElementById('errorMessage').textContent = 'Invalid username or password';
-        }
+        fetch('/token', { // Replace '/upload' with your server endpoint
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                modalLogin.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Allow background scrolling
+                document.getElementById('username').value=''
+                document.getElementById('password').value=''
+
+
+            })
+            .catch(error => {
+                alert('An error occurred while loggging in.');
+            });
     });
 
 });

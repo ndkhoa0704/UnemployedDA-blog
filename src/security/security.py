@@ -29,7 +29,7 @@ class OAuth2PasswordCookie(OAuth2PasswordBearer):
 
     def __init__(self, *args, token_name: str = None, **kwargs):
         super().__init__(*args, **kwargs)
-        self._token_name = token_name or "my-jwt-token"
+        self._token_name = token_name or "client-token"
 
     @property
     def token_name(self) -> str:
@@ -43,6 +43,7 @@ class OAuth2PasswordCookie(OAuth2PasswordBearer):
             HTTPException: 403 error if no token cookie is present.
         """
         token = request.cookies.get(self._token_name)
+        print(token)
         if not token:
             raise HTTPException(status_code=403, detail="Not authenticated")
         return token
@@ -92,6 +93,7 @@ async def get_current_user(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(payload)
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
@@ -135,5 +137,16 @@ async def login_for_access_token(
     responseObj = schemas.Token(access_token=access_token, token_type="bearer")
 
     response = JSONResponse(responseObj.model_dump())
-    response.set_cookie(key=oauth2_scheme.token_name, value=access_token, httponly=True)
+    response.set_cookie(
+        key=oauth2_scheme.token_name,
+        value=access_token,
+        httponly=True,
+        samesite="strict",
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+    )
     return response
+
+
+@router.post("/user", status_code=status.HTTP_201_CREATED)
+async def create_user(user_data: schemas.UserCreate, db=Depends(get_db)) -> None:
+    crud.create_user(db, user_data)

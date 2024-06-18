@@ -1,10 +1,10 @@
 from . import schemas, crud
 from ..dependency import get_db, HTMLtemplates
 from fastapi.responses import HTMLResponse
-from fastapi import APIRouter, Depends, status, UploadFile, Request, HTTPException
+from fastapi import APIRouter, Depends, status, UploadFile, Request, HTTPException, Security
 import mammoth
 from typing import Annotated
-from ..security.security import get_current_active_user
+from ..security.security import get_current_active_user, get_current_user
 from ..security.schemas import User
 from sqlalchemy.orm import Session
 
@@ -16,7 +16,7 @@ router = APIRouter(prefix='/article')
 def upload_article(
     file: UploadFile, 
     db: Annotated[Session, Depends(get_db)],
-    # current_user: Annotated[User, Depends(get_current_active_user)]
+    current_user: Annotated[User, Security(get_current_user, scopes=["article:create"])],
 ):
     try:
         title, remainPart = file.filename.split('-')
