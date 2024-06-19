@@ -19,16 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    // closeBtn.addEventListener('click', function (event) {
-    //     if (event.target == modalUpload) {
-    //         modalUpload.style.display = 'none';
-    //         document.body.style.overflow = 'auto'; // Allow background scrolling
-    //     } else if (event.target == modalLogin) {
-    //         modalLogin.style.display = 'none';
-    //         document.body.style.overflow = 'auto'; // Allow background scrolling
-    //     }
-    // });
-
     window.addEventListener('click', function (event) {
         if (event.target == modalUpload) {
             modalUpload.style.display = 'none';
@@ -68,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // const password = document.getElementById('password').value;
 
         let formData = new FormData(loginForm);
-        formData.append('scopes', 'article:data')
+        formData.append('scope', 'article:create')
         console.log(formData);
 
         fetch('/token', { // Replace '/upload' with your server endpoint
