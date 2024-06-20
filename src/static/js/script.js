@@ -1,12 +1,27 @@
+const get_cookie = () => {
+    let cookiesObj = {}
+    const cookies = document.cookie.split(';')
+    for (let i = 0; i < cookies.length; i++) {
+        console.log(cookies[i])
+        const t = cookies[i].split('=')
+        console.log(t)
+        cookiesObj[t[0]] = t[1]
+    }
+    return cookiesObj
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const uploadBtn = document.getElementById('uploadBtn');
     const modalUpload = document.getElementById('modal-upload-file');
     const modalLogin = document.getElementById('modal-login');
-    // const closeBtn = document.getElementById('closeBtn');
     const uploadForm = document.getElementById('uploadForm');
     const loginBtn = document.getElementById('loginBtn');
     const loginForm = document.getElementById('loginForm');
-    
+
+    if ('logged-in-status' in get_cookie()) {
+        loginBtn.style.display = 'none'
+    }
 
     uploadBtn.addEventListener('click', function () {
         modalUpload.style.display = 'block';
@@ -42,8 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 modalUpload.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Allow background scrolling
-                // window.location.reload()
-                console.log(data)
+                window.location.reload()
             })
             .catch(error => {
                 alert('An error occurred while uploading the files.');
@@ -59,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let formData = new FormData(loginForm);
         formData.append('scope', 'article:create')
-        console.log(formData);
 
         fetch('/token', { // Replace '/upload' with your server endpoint
             method: 'POST',
@@ -69,10 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 modalLogin.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Allow background scrolling
-                document.getElementById('username').value=''
-                document.getElementById('password').value=''
-
-
+                document.getElementById('username').value = ''
+                document.getElementById('password').value = ''
+                window.location.reload()
             })
             .catch(error => {
                 alert('An error occurred while loggging in.');

@@ -144,6 +144,11 @@ async def login_for_access_token(
         samesite="strict",
         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,
     )
+    response.set_cookie(
+        key="logged-in-status",
+        value="logged-in",
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+    )
     return response
 
 
