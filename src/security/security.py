@@ -19,7 +19,7 @@ from fastapi.requests import Request
 from fastapi.responses import JSONResponse
 
 
-SECRET_KEY = os.environ["FASTAPI_SECRET_KEY"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
