@@ -40,11 +40,6 @@ services:
     networks:
       - unemployedda
 
-    volumes:
-      - type: bind
-        source: .
-        target: /app
-
 
 networks:
   unemployedda:
