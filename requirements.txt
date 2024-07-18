@@ -1,0 +1,14 @@
+fastapi
+sqlalchemy
+alembic
+pydantic-settings
+uvicorn[standard]
+gunicorn
+python-jose[cryptography]
+passlib[bcrypt]
+psycopg[binary]
+python-multipart
+bcrypt==4.0.1
+requests
+mammoth
+pyjwt
