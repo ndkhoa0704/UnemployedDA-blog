@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    image: unemployedda-blog:0.1.0
+    image: unemployedda-blog:latest
     container_name: unemployedda-blog-server
     ports:
       - "8001:8001"
