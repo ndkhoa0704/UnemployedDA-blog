@@ -153,5 +153,9 @@ async def login_for_access_token(
 
 
 @router.post("/user", status_code=status.HTTP_201_CREATED)
-async def create_user(user_data: schemas.UserCreate, db=Depends(get_db)) -> None:
+async def create_user(
+    user_data: schemas.UserCreate,
+    db=Depends(get_db),
+    cur_user=Depends(get_current_active_user),
+) -> None:
     crud.create_user(db, user_data)

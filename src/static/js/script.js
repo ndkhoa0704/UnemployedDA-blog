@@ -1,13 +1,11 @@
-const get_cookie = () => {
-    let cookiesObj = {}
-    const cookies = document.cookie.split(';')
-    for (let i = 0; i < cookies.length; i++) {
-        console.log(cookies[i])
-        const t = cookies[i].split('=')
-        console.log(t)
-        cookiesObj[t[0]] = t[1]
-    }
-    return cookiesObj
+const get_cookie = (name) => {
+    return document.cookie.split(';').some(c => {
+        return c.trim().startsWith(name + '=');
+    });
+}
+
+const delete_cookie = (name) => {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
 }
 
 
@@ -18,9 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const uploadForm = document.getElementById('uploadForm');
     const loginBtn = document.getElementById('loginBtn');
     const loginForm = document.getElementById('loginForm');
+    const logoutBtn = document.getElementById('logoutBtn')
 
-    if ('logged-in-status' in get_cookie()) {
-        loginBtn.style.display = 'none'
+    console.log(get_cookie('logged-in-status'))
+    if (get_cookie('logged-in-status') === true) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.visibility = 'visible';
+
     }
 
     uploadBtn.addEventListener('click', function () {
@@ -67,10 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent form from submitting the traditional way
 
-        // // Get the values from the form
-        // const username = document.getElementById('username').value;
-        // const password = document.getElementById('password').value;
-
         let formData = new FormData(loginForm);
         formData.append('scope', 'article:create')
 
@@ -78,7 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    alert('Invalid username or password')
+                }
+            })
             .then(data => {
                 modalLogin.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Allow background scrolling
@@ -90,5 +92,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('An error occurred while loggging in.');
             });
     });
+    
+    logoutBtn.addEventListener('click', (event) => {
+        delete_cookie('client-token')
+        delete_cookie('logged-in-status')
+        loginBtn.style.display = 'none';
+        logoutBtn.style.visibility = 'visible';
+        window.location.reload()
+    })
 
 });

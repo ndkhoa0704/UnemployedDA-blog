@@ -292,3 +292,7 @@ button[type="submit"]:hover {
     color: red;
     margin-top: 10px;
 }
+
+#logoutBtn {
+    visibility: hidden;
+}
