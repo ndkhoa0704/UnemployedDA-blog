@@ -296,3 +296,7 @@ button[type="submit"]:hover {
 #logoutBtn {
     visibility: hidden;
 }
+
+#uploadBtn {
+    visibility: hidden;
+}

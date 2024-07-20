@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (get_cookie('logged-in-status') === true) {
         loginBtn.style.display = 'none';
         logoutBtn.style.visibility = 'visible';
+        uploadBtn.style.visibility = 'visible';
 
     }
 
@@ -94,9 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
     logoutBtn.addEventListener('click', (event) => {
+        // Delete cookies and hide upload, logout button
         delete_cookie('client-token')
         delete_cookie('logged-in-status')
         loginBtn.style.display = 'none';
+        uploadBtn.style.display = 'none';
         logoutBtn.style.visibility = 'visible';
         window.location.reload()
     })
