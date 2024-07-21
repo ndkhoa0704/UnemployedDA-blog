@@ -1,11 +1,10 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
-from .dependency import HTMLtemplates, get_db
-from .article.router import router as article_router
-from .security.security import router as security_router
-from .article import crud as article_crud, schemas as article_schemas
+
+from .routes.article import article_router
+from .routes.user import user_router
+from .routes.index import index_router
 
 
 app = FastAPI(title="UnemployedDA-blog")
@@ -24,22 +23,5 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # routers
 app.include_router(article_router)
-app.include_router(security_router)
-
-
-@app.get("/", response_class=HTMLResponse)
-async def index(
-    request: Request, offset: int = 0, limit: int = 100, db=Depends(get_db)
-):
-    articlesData = article_crud.getArticlesHomePage(offset, limit, db)
-
-    data = []
-    for obj in articlesData:
-        tmp = article_schemas.ArticleReturnHomePage.model_validate(obj).model_dump()
-        tmp["created_at"] = tmp["created_at"].strftime("%d/%m/%Y")
-        tmp["updated_at"] = tmp["updated_at"].strftime("%d/%m/%Y")
-        data.append(tmp)
-
-    return HTMLtemplates.TemplateResponse(
-        request=request, name="index.html", context={"articles": data}
-    )
+app.include_router(user_router)
+app.include_router(index_router)

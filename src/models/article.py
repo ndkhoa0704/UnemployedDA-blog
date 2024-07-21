@@ -1,8 +1,9 @@
-from ..database import Base
+from ..core.database.session import Base
+from ..core.database.mixins.timestamps import TimestampMixin
 import sqlalchemy as sa
 
 
-class Articles(Base):
+class Articles(Base, TimestampMixin):
     __tablename__  = 'Articles'
     id = sa.Column(sa.Integer, primary_key=True)
     created_at = sa.Column('created_at', sa.DateTime)

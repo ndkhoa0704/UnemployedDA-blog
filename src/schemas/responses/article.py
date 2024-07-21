@@ -1,15 +1,6 @@
-from pydantic import BaseModel, model_validator, ConfigDict
+from pydantic import BaseModel, ConfigDict
+from ...schemas.extras.article import Article
 import datetime as dt
-
-
-class Article(BaseModel):
-    title: str
-    contentHTML: str
-    author: str
-
-
-class ArticleCreate(Article):
-    pass
 
 
 class ArticleReturn(Article):

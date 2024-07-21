@@ -1,8 +1,9 @@
 import sqlalchemy as sa
-from ..database import Base
+from ..core.database.session import Base
+from ..core.database.mixins.timestamps import TimestampMixin
 
 
-class User(Base):
+class User(Base, TimestampMixin):
     __tablename__ = 'User'
     id = sa.Column(sa.Integer, primary_key=True)
     username = sa.Column('username', sa.VARCHAR,unique=True)
