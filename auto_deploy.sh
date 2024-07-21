@@ -5,7 +5,7 @@ set -o allexport && source ~/.env && set +o allexport
 date +%d-%m-%y/%H:%M:%S
 cd $REPO_PATH
 
-chown -R $USER postgres-data
+sudo chown -R $USER postgres-data
 
 echo "$REPO_PATH"
 
