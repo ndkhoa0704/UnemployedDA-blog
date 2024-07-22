@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 
-app.mount("/views", StaticFiles(directory="views"), name="views")
+app.mount("/static", StaticFiles(directory="views"), name="static")
 
 # routers
 app.include_router(article_router)
