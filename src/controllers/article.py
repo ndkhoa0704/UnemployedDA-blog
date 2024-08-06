@@ -3,7 +3,6 @@ from ..models.article import Articles as ArticlesModel
 from ..schemas.extras.article import Article as ArticleSchema
 from ..schemas.responses.article import ArticleReturnHomePage
 from sqlalchemy.orm import Session, load_only
-import datetime as dt
 
 
 def ArticleController():

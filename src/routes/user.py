@@ -30,7 +30,7 @@ async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db=Depends(get_session),
     user_controller=Depends(UserController)
 ) -> Token:
-    user = user_controller.authenticate_user(db, form_data.username, form_data.password)
+    user = await user_controller.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
