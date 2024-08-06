@@ -17,9 +17,7 @@ from ..controllers.user import UserController
 from ..schemas.extras.token import Token
 from ..schemas.extras.user import User
 from ..schemas.requests.user import UserCreate
-
 from typing import Annotated
-
 
 
 user_router = APIRouter()
@@ -71,7 +69,7 @@ async def create_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Not enough permissions",
         )
-    user_controller.create_user(db, user_data)
+    await user_controller.create_user(db, user_data)
 
 
 @user_router.get('/revoke-token', status_code=status.HTTP_200_OK)
