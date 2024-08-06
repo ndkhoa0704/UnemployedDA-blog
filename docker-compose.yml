@@ -8,8 +8,5 @@ services:
     ports:
       - "8001:8001"
     restart: always
-    depends_on:
-      unemployedda-db:
-        condition: service_healthy
-    env_file:
-      - .envs
+    volumes:
+      - ./data:/app/data
