@@ -3,7 +3,9 @@ from fastapi import (
     APIRouter,
     Depends,
     status,
-    HTTPException
+    HTTPException,
+    Response,
+    Security
 )
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
@@ -13,7 +15,9 @@ from ..core.auth.token import create_access_token
 from ..core.auth.oauth import oauth2_scheme
 from ..controllers.user import UserController
 from ..schemas.extras.token import Token
+from ..schemas.extras.user import User
 from ..schemas.requests.user import UserCreate
+
 from typing import Annotated
 
 
@@ -55,8 +59,23 @@ async def login_for_access_token(
 @user_router.post("/user", status_code=status.HTTP_201_CREATED)
 async def create_user(
     user_data: UserCreate,
+    current_user: Annotated[
+        User, Security(UserController().get_current_user, scopes=["user:create"])
+    ],
     db=Depends(get_session),
-    cur_user=Depends(UserController().get_current_active_user),
     user_controller=Depends(UserController)
 ) -> None:
+    print(current_user.username)
+    if current_user.username != 'admin':
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not enough permissions",
+        )
     user_controller.create_user(db, user_data)
+
+
+@user_router.get('/revoke-token', status_code=status.HTTP_200_OK)
+def revoke_token(response: Response) -> None:
+    response.delete_cookie(key='client-token')
+    response.delete_cookie(key='logged-in-status')
+    return {"status":"success"}

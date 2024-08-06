@@ -29,10 +29,16 @@ def upload_article(
     current_user: Annotated[
         User, Security(UserController().get_current_user, scopes=["article:create"])
     ],
-    article_controller=Depends(ArticleController)
+    article_controller=Depends(ArticleController),
 ):
     try:
-        title, remainPart = file.filename.split("-")
+        parts = file.filename.split("-")
+        if len(parts) != 2:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="File name format should be <article_name>-<author_name>",
+            )
+        title, remainPart = parts[0], parts[1]
         author, _ = remainPart.split(".")
 
         resultHTML = mammoth.convert_to_html(file.file)
@@ -49,10 +55,15 @@ def upload_article(
 
 @article_router.get("/{id}", response_class=HTMLResponse)
 async def get_article_by_id(
-    request: Request, id: int, db: Annotated[Session, Depends(get_session)],
-    article_controller=Depends(ArticleController)
+    request: Request,
+    id: int,
+    db: Annotated[Session, Depends(get_session)],
+    article_controller=Depends(ArticleController),
 ):
     article_db = article_controller.getArticleById(id, db)
+
+    if article_db is None:
+        return HTMLtemplates.TemplateResponse(request=request, name="404.html")
 
     return HTMLtemplates.TemplateResponse(
         request=request,

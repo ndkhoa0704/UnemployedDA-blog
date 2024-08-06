@@ -11,11 +11,7 @@ from dotenv import dotenv_values
 # access to the values within the .ini file in use.
 config = context.config
 
-local_config = dotenv_values(".env") 
-config.set_main_option("sqlalchemy.url", local_config['POSTGRES_DB_URI'])
-
-
-print(local_config['POSTGRES_DB_URI'])
+config.set_main_option("sqlalchemy.url", dotenv_values(".env")['DB_CONNECTION_URI'])
 
 
 # Interpret the config file for Python logging.

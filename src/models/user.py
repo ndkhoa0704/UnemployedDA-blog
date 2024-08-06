@@ -11,5 +11,3 @@ class User(Base, TimestampMixin):
     email = sa.Column('email', sa.VARCHAR)
     hashed_password = sa.Column('hashed_password', sa.VARCHAR)
     disabled = sa.Column('disabled', sa.Boolean)
-    created_at = sa.Column('created_at', sa.DateTime)
-    updated_at = sa.Column('updated_at', sa.DateTime)

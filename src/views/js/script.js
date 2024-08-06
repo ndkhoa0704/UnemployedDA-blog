@@ -4,10 +4,6 @@ const get_cookie = (name) => {
     });
 }
 
-const delete_cookie = (name) => {   
-    document.cookie = name+'=; Max-Age=-99999999;';  
-}
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const uploadBtn = document.getElementById('uploadBtn');
@@ -18,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
     const logoutBtn = document.getElementById('logoutBtn')
 
-    console.log(get_cookie('logged-in-status'))
+
     if (get_cookie('logged-in-status') === true) {
         loginBtn.style.display = 'none';
         logoutBtn.style.visibility = 'visible';
@@ -51,12 +47,18 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Prevent the default form submission
 
         const formData = new FormData(uploadForm);
+        console.log(formData)
 
         fetch('/article', { // Replace '/upload' with your server endpoint
             method: 'POST',
-            body: formData
+            body: formData,
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    alert('Cannot upload article')
+                }
+                return response.json()
+            })
             .then(data => {
                 modalUpload.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Allow background scrolling
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let formData = new FormData(loginForm);
         formData.append('scope', 'article:create')
 
-        fetch('/token', { // Replace '/upload' with your server endpoint
+        fetch('/token', {
             method: 'POST',
             body: formData
         })
@@ -96,8 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     logoutBtn.addEventListener('click', (event) => {
         // Delete cookies and hide upload, logout button
-        delete_cookie('client-token')
-        delete_cookie('logged-in-status')
+        fetch('/revoke-token', {method: 'GET'})
         loginBtn.style.display = 'none';
         uploadBtn.style.display = 'none';
         logoutBtn.style.visibility = 'visible';

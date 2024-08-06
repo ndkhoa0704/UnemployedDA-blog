@@ -1,4 +1,4 @@
-import os
+from dotenv import dotenv_values
 from sqlalchemy import text
 from sqlalchemy import create_engine, text
 from passlib.context import CryptContext
@@ -8,15 +8,16 @@ import datetime as dt
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 if __name__ == "__main__":
-    username = os.environ["ADMIN_USERNAME"]
-    password = os.environ["ADMIN_PASSWORD"]
-    email = os.environ["ADMIN_EMAIL"]
+    config = dotenv_values('.env')
+    username = config["ADMIN_USERNAME"]
+    password = config["ADMIN_PASSWORD"]
+    email = config["ADMIN_EMAIL"]
     hashed_password = pwd_context.hash(password)
     curdate = dt.datetime.now().strftime("%Y-%m-%d")
 
-    engine = create_engine(os.environ["POSTGRES_DB_URI"])
+    engine = create_engine(config["DB_CONNECTION_URI"])
     with engine.begin() as conn:
-        cursor = conn.execute(text(f"""select from "User" where username = '{username}'"""))
+        cursor = conn.execute(text(f"""select 1 from "User" where username = '{username}'"""))
         if len(cursor.fetchall()) != 0:
             exit()
         conn.execute(

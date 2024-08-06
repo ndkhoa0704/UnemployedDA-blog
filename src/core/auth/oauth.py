@@ -22,7 +22,6 @@ class OAuth2PasswordCookie(OAuth2PasswordBearer):
             HTTPException: 403 error if no token cookie is present.
         """
         token = request.cookies.get(self._token_name)
-        print(token)
         if not token:
             raise HTTPException(status_code=403, detail="Not authenticated")
         return token
@@ -30,5 +29,9 @@ class OAuth2PasswordCookie(OAuth2PasswordBearer):
 
 oauth2_scheme = OAuth2PasswordCookie(
     tokenUrl="token",
-    scopes={"article:create": "create article", "article:read": "read article"},
+    scopes={
+        "article:create": "create article",
+        "article:read": "read article",
+        "user:create": "create user",
+    },
 )
