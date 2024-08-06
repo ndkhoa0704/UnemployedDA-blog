@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.requests import Request
+from ..config.constants import API_SCOPES
 
 
 class OAuth2PasswordCookie(OAuth2PasswordBearer):
@@ -29,9 +30,5 @@ class OAuth2PasswordCookie(OAuth2PasswordBearer):
 
 oauth2_scheme = OAuth2PasswordCookie(
     tokenUrl="token",
-    scopes={
-        "article:create": "create article",
-        "article:read": "read article",
-        "user:create": "create user",
-    },
+    scopes=API_SCOPES,
 )
