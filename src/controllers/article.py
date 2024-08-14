@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from ..models.article import Articles as ArticlesModel
 from ..schemas.extras.article import Article as ArticleSchema
 from ..schemas.responses.article import ArticleReturnHomePage
@@ -45,5 +45,11 @@ def ArticleController():
         def getArticleById(self, id: int, db: Session) -> ArticleSchema:
             query = select(ArticlesModel).filter(ArticlesModel.id == id)
             return db.scalars(query).first()
+        
+        
+        def deleteArticleById(self, id: int, db: Session) -> None:
+            stmt = delete(ArticlesModel).where(ArticlesModel.id == id)
+            db.execute(stmt)
+            db.commit()
 
     return ArticleController()

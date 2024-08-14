@@ -75,3 +75,16 @@ async def get_article_by_id(
             ),
         },
     )
+
+
+@article_router.delete("/{id}", status_code=status.HTTP_200_OK)
+def delete_article_by_id(
+    id: int, 
+    db: Annotated[Session, Depends(get_session)],
+    current_user: Annotated[
+        User, Security(UserController().get_current_user, scopes=["article:delete"])
+    ],
+    article_controller=Depends(ArticleController)
+):
+    article_controller.deleteArticleById(id, db)
+    return { 'status' : 'success' }
